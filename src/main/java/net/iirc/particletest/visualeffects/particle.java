@@ -18,13 +18,20 @@ import team.lodestar.lodestone.systems.particle.data.spin.*;
 
 import java.awt.Color;
 
+import static net.minecraft.world.item.Items.STICK;
+
 @Mod.EventBusSubscriber(value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class particle {
     @SubscribeEvent
     public static void clientTick(TickEvent.ClientTickEvent event) {
         final LocalPlayer player = Minecraft.getInstance().player;
         
-        if(player != null){
+        if(player == null){
+            return;
+        }
+
+
+        if(player.getItemInHand(player.getUsedItemHand()).getItem() == STICK) {
             spawnParticles(player.level(), player.position());
         }
     }
