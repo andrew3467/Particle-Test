@@ -36,11 +36,10 @@ public class particle {
 
         if(player.getItemInHand(player.getUsedItemHand()).getItem() == STICK) {
             if(Minecraft.getInstance().options.keyUse.isDown()) {
-                spawnParticles(player.level(), player.getEyePosition());
-                double x = player.getLookAngle().x;
-                double y = player.getLookAngle().y;
-                double z = player.getLookAngle().z;
-
+                double distance = 4; // Adjust the distance as needed
+                Vec3 lookVector = player.getLookAngle();
+                Vec3 spawnPosition = player.getEyePosition().add(lookVector.x * distance, lookVector.y * distance, lookVector.z * distance);
+                spawnParticles(player.level(), spawnPosition);
             }
 //
         }
@@ -52,7 +51,7 @@ public class particle {
         WorldParticleBuilder.create(LodestoneParticleRegistry.WISP_PARTICLE)
                 .setColorData(ColorParticleData.create(startingColor, endingColor).setCoefficient(1.4f).setEasing(Easing.BACK_OUT).build())
                 .setTransparencyData(GenericParticleData.create(0.5F, (float) 0.0F, 0.0F).build())
-                .createCircle(level, pos.x, pos.y, pos.z, 2, 5, 1);
+                .createCircle(level, pos.x, pos.y, pos.z, 2, 5, 1); // Create corcle
 
 
     }
