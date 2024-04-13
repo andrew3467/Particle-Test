@@ -3,7 +3,9 @@ package net.iirc.particletest.visualeffects;
 
 import net.minecraft.client.*;
 import net.minecraft.client.player.*;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.level.*;
+import net.minecraft.world.level.levelgen.Column;
 import net.minecraft.world.phys.*;
 import net.minecraftforge.api.distmarker.*;
 import net.minecraftforge.event.*;
@@ -21,10 +23,13 @@ import java.awt.Color;
 import java.util.function.Supplier;
 
 import static java.awt.Color.blue;
+import static java.awt.Color.green;
 import static net.minecraft.world.item.Items.STICK;
 
 @Mod.EventBusSubscriber(value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class particle {
+    private static net.minecraft.world.level.Level Level;
+
     @SubscribeEvent
     public static void clientTick(TickEvent.ClientTickEvent event) {
         final LocalPlayer player = Minecraft.getInstance().player;
@@ -34,25 +39,27 @@ public class particle {
         }
 
 
-        if(player.getItemInHand(player.getUsedItemHand()).getItem() == STICK) {
-            if(Minecraft.getInstance().options.keyUse.isDown()) {
-                double distance = 4; // Adjust the distance as needed
-                Vec3 lookVector = player.getLookAngle();
-                Vec3 spawnPosition = player.getEyePosition().add(lookVector.x * distance, lookVector.y * distance, lookVector.z * distance);
-                spawnParticles(player.level(), spawnPosition);
-            }
+//        if(player.getItemInHand(player.getUsedItemHand()).getItem() == STICK) {
+////            if(Minecraft.getInstance().options.keyUse.isDown()) {}
+        spawnParticles(player.level(), player.position());
+
 //
-        }
+//        }
     }
 
     private static void spawnParticles(Level level, Vec3 pos) {
+//        final localPlayer player = Minecraft.getInstance().player;;
+//        double yCoords =
         Color startingColor = new Color(157, 0, 255);
         Color endingColor = new Color(66, 0, 255);
         WorldParticleBuilder.create(LodestoneParticleRegistry.WISP_PARTICLE)
                 .setColorData(ColorParticleData.create(startingColor, endingColor).setCoefficient(1.4f).setEasing(Easing.BACK_OUT).build())
                 .setTransparencyData(GenericParticleData.create(0.5F, (float) 0.0F, 0.0F).build())
-                .createCircle(level, pos.x, pos.y, pos.z, 2, 5, 1); // Create corcle
+                .createCircle(level, 0, -59, 0, 1, 2, 20);
 
+
+    }
+    public static void sphore(Level level, Vec3 pos) {
 
     }
 }
