@@ -36,7 +36,7 @@ import static net.minecraft.world.item.Items.STICK;
 
 @Mod.EventBusSubscriber(value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class particle {
-    public static final ResourceLocation UV_GRID = new ResourceLocation(ParticleTest.MODID, "textures/vfx/uv_test.png");
+    public static final ResourceLocation UV_GRID = new ResourceLocation(ParticleTest.MODID, "textures/vfx/uv_grid.png");
 
 
     @SubscribeEvent
@@ -50,7 +50,6 @@ public class particle {
             Vec3 renderPos = new Vec3(0, 25, 0);
             Vec3 cameraPos = camera.getPosition();
             Vec3 relativePos = renderPos.subtract(cameraPos);
-
             float radius = 3.0f;
 
             poseStack.pushPose();
@@ -60,9 +59,9 @@ public class particle {
 
             VertexConsumer vertexConsumer =
                     RenderHandler.DELAYED_RENDER.getBuffer(LodestoneRenderTypeRegistry.ADDITIVE_TEXTURE_TRIANGLE.applyAndCache(UV_GRID));
-
-            builder.renderSphere(vertexConsumer, poseStack, radius, 20, 20);
             poseStack.popPose();
+            builder.renderSphere(vertexConsumer, poseStack, radius, 20, 20);
+
         }
     }
 }
