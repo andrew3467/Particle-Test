@@ -16,6 +16,7 @@ import net.minecraftforge.client.event.RenderLevelStageEvent;
 import net.minecraftforge.event.*;
 import net.minecraftforge.eventbus.api.*;
 import net.minecraftforge.fml.common.*;
+import org.joml.Matrix4f;
 import team.lodestar.lodestone.handlers.RenderHandler;
 import team.lodestar.lodestone.registry.client.LodestoneRenderTypeRegistry;
 import team.lodestar.lodestone.registry.common.particle.*;
@@ -56,6 +57,16 @@ public class particle {
             poseStack.translate(relativePos.x, relativePos.y, relativePos.z);
 
             VFXBuilders.WorldVFXBuilder builder = new VFXBuilders.WorldVFXBuilder();
+
+            builder.setVertexSupplier(
+                    new VFXBuilders.WorldVFXBuilder.WorldVertexPlacementSupplier() {
+                        @Override
+                        public void placeVertex(VertexConsumer vertexConsumer, Matrix4f matrix4f, float v, float v1, float v2, float v3, float v4) {
+
+                        }
+                    }
+            );
+
 
             VertexConsumer vertexConsumer =
                     RenderHandler.DELAYED_RENDER.getBuffer(LodestoneRenderTypeRegistry.ADDITIVE_TEXTURE_TRIANGLE.applyAndCache(UV_GRID));
